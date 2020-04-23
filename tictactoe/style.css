@@ -1,0 +1,28 @@
+td{
+    border: 2px solid black;
+    height:100px;
+    width:100px;
+    text-align:center;
+    font-size:70px;
+    cursor:pointer;
+}
+
+table{
+    border-collapse:collapse;
+    position:absolute;
+    left:50%;
+    margin-left:-155px;
+}
+
+td:hover{
+    background-color:lightgrey;
+}
+#winner{
+    font-size:50px;
+    position: absolute;
+    left:75%;
+    top:10%;
+
+}
+
+

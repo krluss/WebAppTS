@@ -56,6 +56,7 @@ class Board{
     createCell(x: number, y: number){
         let cellElement = document.createElement('td');
         let cell = new Cell(x, y , cellElement);
+        cell.cellValue = '';
         return cell;
     }
     
@@ -140,12 +141,14 @@ class Board{
     checkDraw(){
         let count = 0;
         for(let i = 0 ; i < this.width ; i++){
-            if(this.cells[i][i].cellValue != ''){
-                count++
+            for(let j = 0; j < this.width; j++){
+                if(this.cells[i][j].cellValue !== ''){
+                    count++
+                }
             }
         }
-        if(count > this.width){
-            this.winner.innerHTML = 'Remis'
+        if(count === this.width*this.width){
+            this.winner.innerHTML = 'Remis!'
         }
     }
 
@@ -168,8 +171,8 @@ class Board{
                     })
                 })
             }else{
-                this.changeChar();
                 this.checkDraw();
+                this.changeChar();
             }
 
            

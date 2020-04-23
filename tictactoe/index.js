@@ -45,6 +45,7 @@ var Board = /** @class */ (function () {
     Board.prototype.createCell = function (x, y) {
         var cellElement = document.createElement('td');
         var cell = new Cell(x, y, cellElement);
+        cell.cellValue = '';
         return cell;
     };
     Board.prototype.changeChar = function () {
@@ -118,12 +119,14 @@ var Board = /** @class */ (function () {
     Board.prototype.checkDraw = function () {
         var count = 0;
         for (var i = 0; i < this.width; i++) {
-            if (this.cells[i][i].cellValue != '') {
-                count++;
+            for (var j = 0; j < this.width; j++) {
+                if (this.cells[i][j].cellValue !== '') {
+                    count++;
+                }
             }
         }
-        if (count > this.width) {
-            this.winner.innerHTML = 'Remis';
+        if (count === this.width * this.width) {
+            this.winner.innerHTML = 'Remis!';
         }
     };
     Board.prototype.writeToCell = function (cell) {
@@ -143,8 +146,8 @@ var Board = /** @class */ (function () {
                 });
             }
             else {
-                this.changeChar();
                 this.checkDraw();
+                this.changeChar();
             }
         }
     };

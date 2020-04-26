@@ -1,0 +1,23 @@
+input, textarea,label{
+    display:block;
+}
+.arrayData{
+    width:50%;
+    position:relative;
+    padding:20px;
+    left:2%;
+}
+#formData{
+    position:relative;
+    width:100%;
+    left:2%;
+}
+#sendValues{
+    border: none;
+    position: relative;
+    left:4%;
+    margin-top: 10px;
+    padding:10px;
+    border-radius:50%;
+    background-color: #e7e7e7;
+}

@@ -1,3 +1,10 @@
+document.addEventListener('DOMContentLoaded', ()=>{Start()})
+
+function Start(){
+    const app = new App(input, inputNazwisko ,mail ,select ,checkbox ,textarea ,date );
+    app.Show();
+}
+
 enum FieldType {
     text = 1,
     textarea,
@@ -9,7 +16,8 @@ enum FieldType {
 
 interface Field {
     name: string;
-    label: string;
+    label: HTMLLabelElement;
+    labelValue: string;
     type: FieldType;
     render(): HTMLElement;
     getValue(): any;
@@ -18,17 +26,19 @@ interface Field {
 
 class InputField implements Field{
     name: string;
-    label: string;
+    label: HTMLLabelElement;
+    labelValue: string;
     type: FieldType;
     element: HTMLInputElement;
 
     constructor(name: string, label: string){
-        this.type = FieldType.text;
         this.element = <HTMLInputElement>document.createElement('input');
-        this.element.setAttribute('type', 'this.type');
-        this.name = name;
-        this.label = label;
-        this.element.name = this.name;
+        this.element.name = name;
+        this.element.type = FieldType[1];
+        this.label = <HTMLLabelElement>document.createElement('label');
+        this.label.innerHTML = label;
+        this.labelValue = label;
+        
     }
 
     render(){
@@ -36,23 +46,24 @@ class InputField implements Field{
     }
 
     getValue(): any{
-        return this.element.nodeValue;
+        return this.element.value;
     }
 }
 
 
 class TextAreaField implements Field{
     name: string;
-    label: string;
+    label: HTMLLabelElement;
+    labelValue: string;
     type: FieldType;
-    element: HTMLElement;
+    element: HTMLTextAreaElement;
 
     constructor(name: string, label: string){
-        this.type = FieldType.textarea
         this.element = <HTMLTextAreaElement>document.createElement('textarea');
-        this.name = name;
-        this.label = label;
-        this.element.className = this.name
+        this.element.name = name;
+        this.label = <HTMLLabelElement>document.createElement('label');
+        this.label.innerHTML = label;
+        this.labelValue = label;
     }
 
     render(){
@@ -60,24 +71,25 @@ class TextAreaField implements Field{
     }
 
     getValue(): any{
-        return this.element.nodeValue;
+        return this.element.value;
     }
 }
 
 
 class DateField implements Field{
     name: string;
-    label: string;
+    label: HTMLLabelElement;
+    labelValue: string;
     type: FieldType;
-    element: HTMLElement;
+    element: HTMLInputElement;
 
     constructor(name: string, label: string){
-        this.type = FieldType.date;
         this.element = <HTMLInputElement>document.createElement('input');
-        this.element.setAttribute('type', ' this.type');
-        this.name = name;
-        this.label = label;
-        this.element.className = this.name
+        this.element.name = name;
+        this.element.type = FieldType[3];
+        this.label = <HTMLLabelElement>document.createElement('label');
+        this.label.innerHTML = label;
+        this.labelValue = label;
     }
 
     render(){
@@ -85,23 +97,24 @@ class DateField implements Field{
     }
 
     getValue(): any{
-        return this.element.nodeValue;
+        return this.element.value;
     }
 }
 
 class EmailField implements Field{
     name: string;
-    label: string;
+    label: HTMLLabelElement;
+    labelValue: string;
     type: FieldType;
-    element: HTMLElement;
+    element: HTMLInputElement;
 
     constructor(name: string, label: string){
-        this.type = FieldType.email;
         this.element = <HTMLInputElement>document.createElement('input');
-        this.element.setAttribute('type', 'this.type');
-        this.name = name;
-        this.label = label;
-        this.element.className = this.name
+        this.element.name = name;
+        this.element.type = FieldType[4];
+        this.label = <HTMLLabelElement>document.createElement('label');
+        this.label.innerHTML = label;
+        this.labelValue = label;
     }
 
     render(){
@@ -109,22 +122,29 @@ class EmailField implements Field{
     }
 
     getValue(): any{
-        return this.element.nodeValue;
+        return this.element.value;
     }
 }
 
 class SelectField implements Field{
     name: string;
-    label: string;
+    label: HTMLLabelElement;
+    labelValue: string;
     type: FieldType;
-    element: HTMLElement;
+    element: HTMLSelectElement;
 
-    constructor(name: string, label: string){
-        this.type = FieldType.select
+    constructor(name: string, label: string, ...options: string[]){
         this.element = <HTMLSelectElement>document.createElement('select');
-        this.name = name;
-        this.label = label;
-        this.element.className = this.name
+        options.forEach(element=>{
+            const options = document.createElement('option');
+            options.value = element;
+            options.text = element;
+            this.element.add(options);
+        });
+        this.element.name = name;
+        this.label = <HTMLLabelElement>document.createElement('label');
+        this.label.innerHTML = label;
+        this.labelValue = label;
     }
 
     render(){
@@ -132,23 +152,24 @@ class SelectField implements Field{
     }
 
     getValue(): any{
-        return this.element.nodeValue;
+        return this.element.value;
     }
 }
 
 class CheckboxField implements Field{
     name: string;
-    label: string;
+    label: HTMLLabelElement;
+    labelValue: string;
     type: FieldType;
-    element: HTMLElement;
+    element: HTMLInputElement;
 
     constructor(name: string, label: string){
-        this.type = FieldType.checkbox;
         this.element = <HTMLInputElement>document.createElement('input');
-        this.element.setAttribute('type', 'this.type');
-        this.name = name;
-        this.label = label;
-        this.element.className = this.name
+        this.element.name = name;
+        this.element.type = FieldType[6];
+        this.label = <HTMLLabelElement>document.createElement('label');
+        this.label.innerHTML = label;
+        this.labelValue = label;
     }
 
     render(){
@@ -156,24 +177,63 @@ class CheckboxField implements Field{
     }
 
     getValue(): any{
-        return this.element.nodeValue;
-    }
+        return (this.element.checked) ?  'Tak' :  'Nie';
 }
 
 class Form{
     fields: Field[];
     formElement: HTMLElement;
+    valueElement: HTMLElement;
 
-    constructor(id: string){
+    constructor(id: string, values: string){
         this.fields = new Array();
         this.formElement = document.getElementById(id);
+        this.valueElement = document.getElementById(values);
     }
 
     render(): void{
-        //TODO
+        this.fields.forEach(element =>{
+            this.formElement.appendChild(element.label);
+            this.formElement.appendChild(element.render());
+        });
     }
 
     getValue(): void{
-        //TODO
+        const array = <HTMLElement>document.createElement('ol');
+        array.className = 'arrayData';
+        this.valueElement.appendChild(array);
+
+        this.fields.forEach(element => {
+            const li = document.createElement('li');
+            li.innerHTML = element.labelValue + ': '+ element.getValue();
+            array.appendChild(li);
+        });
     }
 }
+
+class App{
+    form: Form;
+    sendValues: HTMLElement;
+
+    constructor(...elements: Field[]){
+        this.form = new Form('formData', 'formDataOut');
+        this.form.fields.push(...elements);
+        this.sendValues = document.getElementById('sendValues');
+        this.sendValues.addEventListener('click', () => this.form.getValue());
+    }
+    Show(){
+        this.form.render();
+    }
+
+}
+
+
+const input = new InputField('Name', 'Imię');
+const inputNazwisko = new InputField('Surname', 'Nazwisko');
+const mail = new EmailField('Mail', 'E-Mail');
+const select = new SelectField('Select', 'Wybrany kierunek studiów', 'Kryminalistyka', 'Logistyka', 'Ekonometria');
+const checkbox = new CheckboxField('E-Learning', 'Czy preferujesz e-learning?');
+const textarea = new TextAreaField('Notes', 'Uwagi');
+const date = new DateField('Date', 'Data');
+
+

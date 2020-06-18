@@ -1,0 +1,61 @@
+@import 'Colors';
+
+
+@mixin form {
+    background-color:$formColor;
+    width:20%;
+    height:auto;
+    margin-top:10px;
+    margin-left:1%;
+    padding: 4%;
+    float:left;
+}
+
+@mixin elementsForm {
+    font-size: large;
+    margin-top: 5%;
+    margin-right: 5%;
+    margin-bottom: 5%;
+    margin-left: 10%;
+    border-width: 0 0 1px;
+    height: 35px;
+    width: 250px;
+}
+
+@mixin formButton{
+    outline: none;
+    margin-left: 15%;
+    border: none;
+    cursor: pointer;
+    color: $buttonTextColor;
+    background-color: $buttonBgColor;
+    font-size: 28px;
+    padding: 14px 57px;
+}
+
+
+#formDiv{
+    @include form();
+
+    h1{
+        position:relative;
+        font-size: x-large;
+        left: 10%;
+    }
+
+    #Form > *{
+        @include elementsForm();
+
+            textarea {
+                min-height: 35px;
+                max-height: 250px;
+                min-width: 250px;
+                max-width: 250px;
+            }   
+    }
+
+    #sendValues {
+        @include formButton();
+    }
+}
+

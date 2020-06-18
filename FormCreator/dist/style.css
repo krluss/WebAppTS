@@ -1,0 +1,119 @@
+body{
+    background-color:#082567;
+    margin:0 auto;
+}
+
+/*
+Form
+*/
+
+#formDiv{
+    background-color:white;
+    width:20%;
+    height:auto;
+    margin-top:10px;
+    margin-left:1%;
+    padding: 4%;
+    float:left;
+}
+
+#formDiv h1{
+    position:relative;
+    font-size: x-large;
+    left: 10%;
+}
+
+#formDiv #Form > *{
+    font-size: large;
+    margin-top: 5%;
+    margin-right: 5%;
+    margin-bottom: 5%;
+    margin-left: 10%;
+    border-width: 0 0 1px;
+    height: 35px;
+    width: 250px;
+}
+
+
+#formDiv #Form textarea {
+    min-height: 35px;
+    max-height: 250px;
+    min-width: 250px;
+    max-width: 250px;
+}
+
+/*
+Btn Form
+*/
+
+#formDiv #sendValues {
+    outline: none;
+    margin-left: 15%;
+    border: none;
+    cursor: pointer;
+    color: white;
+    background-color: #E65B56;
+    font-size: 28px;
+    padding: 14px 57px;
+}
+
+/*
+Table
+*/
+
+#formDataOut{
+    margin-top:10px;
+    width:70%;
+    background-color:white;
+    float:right;
+    margin-right:10px;
+    
+}
+#formDataOut #values {
+    width:100%;
+    border-collapse: collapse;
+    margin-right: 0px;
+}
+
+#formDataOut #values #headings{
+    color:white;
+}
+
+#formDataOut #values #headings th {
+    background-color: #E65B56;
+    padding: 10px;
+    border-right: 1px solid black;
+  }
+
+#formDataOut #values #headings th:last-of-type {
+    border: none;
+  }
+
+#formDataOut #values tr td{
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/*
+Table delete button
+*/
+
+#formDataOut #values td #del {
+    width: 50px;
+    height: 32px;
+    margin-left: 10px;
+    cursor: pointer;
+    outline: none;
+    color: white;
+    background-color: #E65B56;
+    border: none;
+}
+
+
+
+
+
+
+
+

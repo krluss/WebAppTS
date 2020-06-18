@@ -1,0 +1,56 @@
+@import 'Colors';
+
+
+@mixin table{
+    margin-top:10px;
+    width:70%;
+    background-color:$tableBgColor;
+    float:right;
+    margin-right:10px;
+}
+
+@mixin delButton {
+    width: 50px;
+    height: 32px;
+    margin-left: 10px;
+    cursor: pointer;
+    outline: none;
+    color: $buttonTextColor;
+    background-color: $buttonBgColor;
+    border: none;    
+}
+
+#formDataOut{
+    @include table();
+    
+    #values {
+        width:100%;
+        border-collapse: collapse;
+        margin-right: 0px;
+
+            #headings{
+                color:$tableTextColor;
+                
+                    th {
+                        background-color: $tableHeadingsColor;
+                        padding: 10px;
+                        border-right: 1px solid black;
+                    }
+                    th:last-of-type {
+                         border: none;
+                    }
+            }
+
+            tr td{
+                padding: 10px;
+                text-align: center;
+                font-weight: bold;
+            }
+
+            td #del {
+                @include delButton();
+            }
+    }
+}
+
+
